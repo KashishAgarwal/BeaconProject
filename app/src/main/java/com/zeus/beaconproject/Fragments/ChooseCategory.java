@@ -80,9 +80,9 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
                     public void onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
                         //Toast.makeText(getContext(), "text= "+text.toString(), Toast.LENGTH_SHORT).show();
                         cat=text.toString();
-
+                        cat=categoryId.get(cat);
                         final Call<PaginatedItemResult> getElec= ApiClient.getApiInterface().getItemsListByCategory
-                                (categoryId.get(cat), Contract.WALMART_API_KEY,Contract.WALMART_API_RETURN_FORMAT);
+                                (cat, Contract.WALMART_API_KEY,Contract.WALMART_API_RETURN_FORMAT);
                         final ProgressDialog progressDialog = new ProgressDialog(getContext());
                         progressDialog.setTitle("Fetching Data");
                         progressDialog.setMessage("In progress");
@@ -93,6 +93,10 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
                                 progressDialog.dismiss();
                                 if (response.isSuccessful()){
                                     PaginatedItemResult hh=response.body();
+                                    if(hh!=null)
+                                        for(int k=0;k<hh.items.size();++k){
+                                            hh.items.get(k).category=cat;
+                                        }
                                     Log.i("help",response.toString()+"14525");
                                     Toast.makeText(getContext(), "Welcome to "+cat+" section!", Toast.LENGTH_SHORT).show();
                                     FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();

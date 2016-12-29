@@ -44,4 +44,10 @@ public class ChosenProduct extends Model implements Serializable {
     public double salePrice;
     @Column(name="quantity")
     public int quantity;
+
+    public WalmartItem getWalmartItem(){
+        WalmartItem ww= new WalmartItem(itemId,name,category,thumbnailImage,shortDescription,longDescription,msrp,salePrice);
+        return ww;
+    }
+
 }

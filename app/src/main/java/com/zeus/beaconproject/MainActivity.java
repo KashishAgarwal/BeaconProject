@@ -27,9 +27,11 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
 import com.zeus.beaconproject.Fragments.CatalogByCategory;
 import com.zeus.beaconproject.Fragments.ChooseCategory;
 import com.zeus.beaconproject.Fragments.TakemeTo;
+import com.zeus.beaconproject.Models.ChosenProduct;
 import com.zeus.beaconproject.Models.PaginatedItemResult;
 import com.zeus.beaconproject.Models.WalmartItem;
 import com.zeus.beaconproject.Networking.ApiClient;
@@ -56,7 +58,13 @@ public class MainActivity extends AppCompatActivity
     Region region;
     BeaconManager beaconManager;
 
-    public static final ArrayList<WalmartItem> myshoppinglist= new ArrayList<WalmartItem>() ;
+    public static void updateShoppingList(){
+        myshoppinglist=new Select()
+                .from(ChosenProduct.class)
+                .execute();
+    }
+
+    public static List<ChosenProduct> myshoppinglist;
     public static final Map<String,String> beaconToCat=new HashMap<String, String>(){{
         put("42133:54277","3944");
         put("1001:1001","4125");
@@ -69,12 +77,6 @@ public class MainActivity extends AppCompatActivity
     static public Bundle catalogByCategoryBundle;
 
 
-//        public void fromfrag1(List<WalmartItem> s)
-//    {
-//        myshoppinglist=s;
-//    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +85,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        WalmartItem hh=new WalmartItem();
-        hh.name="xx";
-        hh.category="3944";
-        myshoppinglist.add(hh);
+        updateShoppingList();
         beaconManager =new BeaconManager(this);
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
@@ -97,9 +96,9 @@ public class MainActivity extends AppCompatActivity
                     String cat=beaconToCat.get(Id);
                     for(int i=0;i<myshoppinglist.size();i++)
                     {
-                        String misseditem=ChooseCategory.categoryName.get(myshoppinglist.get(i).category);
+                        String missedCategory=ChooseCategory.categoryName.get(myshoppinglist.get(i).category);
                         if(myshoppinglist.get(i).category.equals(cat))
-                            remind(misseditem,"You Forgot this!");
+                            remind(missedCategory,myshoppinglist.get(i).name);
                     }
 
                     Log.d("Reminded","Reminded ");
@@ -129,24 +128,24 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(R.id.explore_catalog);
     }
 
-    public void remind(String s,String title)
+    public void remind(String missedCat,String missedItem)
     {
-        Toast.makeText(this,"You missed "+s,Toast.LENGTH_LONG).show();
-        Intent notifyIntent = new Intent(this, MainActivity.class);
-        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
-                new Intent[]{notifyIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = new Notification.Builder(this)
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
-                .setContentTitle(title)
-                .setContentText(s)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .build();
-        notification.defaults |= Notification.DEFAULT_SOUND;
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);
+        Toast.makeText(this,"You missed "+missedItem+" in "+missedCat,Toast.LENGTH_LONG).show();
+//        Intent notifyIntent = new Intent(this, MainActivity.class);
+//        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
+//                new Intent[]{notifyIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Notification notification = new Notification.Builder(this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+//                .setContentTitle(title)
+//                .setContentText(s)
+//                .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+//                .build();
+//        notification.defaults |= Notification.DEFAULT_SOUND;
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(1, notification);
 
     }
 
