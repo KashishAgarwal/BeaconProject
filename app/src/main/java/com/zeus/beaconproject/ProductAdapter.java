@@ -8,10 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.activeandroid.query.Select;
 import com.squareup.picasso.Picasso;
+import com.zeus.beaconproject.Models.ChosenProduct;
 import com.zeus.beaconproject.Models.WalmartItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Zeus on 29-Dec-16.
@@ -23,7 +26,7 @@ public class ProductAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private boolean mShowQuantity;
     Context context;
-
+    List<ChosenProduct> jjj;
     public ProductAdapter(ArrayList<WalmartItem> list, LayoutInflater inflater, boolean showQuantity,Context context) {
         mProductList = list;
         mInflater = inflater;
@@ -75,8 +78,9 @@ public class ProductAdapter extends BaseAdapter {
         item.productWalmartPrice.setText("Rs: "+curProduct.salePrice);
         // Show the quantity in the cart or not
         if (mShowQuantity) {
-//            item.productQuantity.setText("Quantity: "
-//                    + ShoppingCartHelper.getProductQuantity(curProduct));
+            jjj=new Select().from(ChosenProduct.class).where("itemId=?",curProduct.itemId).execute();
+            item.productQuantity.setText("Quantity: "
+                    + jjj.get(0).quantity);
         } else {
             // Hid the view
             item.productQuantity.setVisibility(View.GONE);

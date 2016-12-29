@@ -38,7 +38,7 @@ public class ShoppingListFragment extends Fragment {
         if(mCartList!=null)
             for(int i=0;i<mCartList.size();++i)
                 dispList.add(mCartList.get(i).getWalmartItem());
-        listViewCatalog.setAdapter(new ProductAdapter(dispList, inflater, false,getContext()));
+        listViewCatalog.setAdapter(new ProductAdapter(dispList, inflater, true,getContext()));
 
         return v;
     }
