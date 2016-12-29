@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     Region region;
     BeaconManager beaconManager;
+    public static String nearestCategoryCurrently;
 
     public static void updateShoppingList(){
         myshoppinglist=new Select()
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity
                     Beacon b= list.get(0);
                     String Id=String.format("%d:%d",b.getMajor(),b.getMinor());
                     String cat=beaconToCat.get(Id);
+                    nearestCategoryCurrently=ChooseCategory.categoryName.get(cat);
                     for(int i=0;i<myshoppinglist.size();i++)
                     {
                         String missedCategory=ChooseCategory.categoryName.get(myshoppinglist.get(i).category);
