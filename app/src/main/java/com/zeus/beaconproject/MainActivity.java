@@ -2,20 +2,11 @@ package com.zeus.beaconproject;
 
 
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,33 +15,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.activeandroid.query.Select;
 import com.zeus.beaconproject.Fragments.CatalogByCategory;
 import com.zeus.beaconproject.Fragments.ChooseCategory;
 import com.zeus.beaconproject.Fragments.TakemeTo;
 import com.zeus.beaconproject.Models.ChosenProduct;
-import com.zeus.beaconproject.Models.PaginatedItemResult;
-import com.zeus.beaconproject.Models.WalmartItem;
-import com.zeus.beaconproject.Networking.ApiClient;
-import com.zeus.beaconproject.R;
-
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.SystemRequirementsChecker;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import br.com.goncalves.pugnotification.notification.PugNotification;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -97,8 +78,12 @@ public class MainActivity extends AppCompatActivity
                     for(int i=0;i<myshoppinglist.size();i++)
                     {
                         String missedCategory=ChooseCategory.categoryName.get(myshoppinglist.get(i).category);
-                        if(myshoppinglist.get(i).category.equals(cat))
-                            remind(missedCategory,myshoppinglist.get(i).name);
+                        if(myshoppinglist.get(i).category.equals(cat)){
+                            ChosenProduct toRemindProduct=myshoppinglist.get(i);
+                            myshoppinglist.remove(i);
+                            remind(toRemindProduct);
+                        }
+
                     }
 
                     Log.d("Reminded","Reminded ");
@@ -128,25 +113,21 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(R.id.explore_catalog);
     }
 
-    public void remind(String missedCat,String missedItem)
+    public void remind(ChosenProduct toRemindProduct)
     {
-        Toast.makeText(this,"You missed "+missedItem+" in "+missedCat,Toast.LENGTH_LONG).show();
-//        Intent notifyIntent = new Intent(this, MainActivity.class);
-//        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
-//                new Intent[]{notifyIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
-//        Notification notification = new Notification.Builder(this)
-//                .setSmallIcon(android.R.drawable.ic_dialog_alert)
-//                .setContentTitle(title)
-//                .setContentText(s)
-//                .setAutoCancel(true)
-//                .setContentIntent(pendingIntent)
-//                .build();
-//        notification.defaults |= Notification.DEFAULT_SOUND;
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        notificationManager.notify(1, notification);
+        Toast.makeText(this,"You missed "+toRemindProduct.name+" in "+ChooseCategory.categoryName.get(toRemindProduct.category),Toast.LENGTH_LONG).show();
 
+        PugNotification.with(getApplicationContext())
+                .load()
+                .title("Reminder")
+                .message("Buy "+toRemindProduct.name+" from "+ChooseCategory.categoryName.get(toRemindProduct.category)+" section")
+                .bigTextStyle("Hurry")
+                .smallIcon(R.drawable.pugnotification_ic_launcher)
+                .largeIcon(R.drawable.pugnotification_ic_launcher)
+                .flags(Notification.DEFAULT_ALL)
+                .color(android.R.color.background_dark)
+                .simple()
+                .build();
     }
 
     protected void onResume() {
