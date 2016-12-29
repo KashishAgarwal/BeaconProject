@@ -2,18 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background"
+        android:src="@drawable/depart"/>
 
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200sp"
         android:layout_gravity="center"
         android:gravity="center"
         android:background="@drawable/background"
         android:text="Select Dept to go"
         android:id="@+id/deptToGoSelectButton"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
+
         android:layout_weight="1"
         android:layout_centerHorizontal="true" />
 

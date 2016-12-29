@@ -35,7 +35,7 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
 
     public static final HashMap<String,String> categoryId=new HashMap<String,String>(){{
         put("Electronics","3944");
-        put("Toys","4125");
+        put("Toys","4171");
         put("Jewelry","3891");
         put("Office","1229749");
         put("Music","4104");
@@ -44,7 +44,7 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
 
     public static final HashMap<String,String> categoryName=new HashMap<String,String>(){{
         put("3944","Electronics");
-        put("4125","Toys");
+        put("4171","Toys");
         put("3891","Jewelry");
         put("1229749","Office");
         put("4104","Music");

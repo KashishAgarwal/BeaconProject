@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity
     public static List<ChosenProduct> myshoppinglist;
     public static final Map<String,String> beaconToCat=new HashMap<String, String>(){{
         put("42133:54277","3944");
-        put("1001:1001","4125");
-        put("1002:1002","3891");
-        put("1020:1020","4104");
+        put("17927:48124","4125");
+        put("43197:23035","3891");
+        put("62580:6955","4104");
     }};
 
     ProgressDialog progressDialog;
