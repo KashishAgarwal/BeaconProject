@@ -32,9 +32,11 @@ public class Image extends Fragment {
         if(recBundle!=null){
             mystring=recBundle.getString("moveTo");
         }
-        ImageView i = (ImageView) v.findViewById(R.id.imageView);
+        if(mystring==null)
+            mystring="here";
+        ImageView i = (ImageView) v.findViewById(R.id.imageNavigate);
 
-        /*switch (mystring) {
+        switch (mystring) {
             case "Left":
                 Picasso.with(getContext()).load(R.drawable.left).into(i);
                 break;
@@ -48,10 +50,10 @@ public class Image extends Fragment {
                 Picasso.with(getContext()).load(R.drawable.goback).into(i);
                 break;
             default:
-                Picasso.with(getContext()).load(R.drawable.side_nav_bar).into(i);
+                Picasso.with(getContext()).load(R.drawable.uarehere).into(i);
                 break;
-        }*/
-        Log.i("Image nn",mystring+" 555");
+        }
+        //Log.i("Image nn",mystring+" 555");
         return v;
     }
 

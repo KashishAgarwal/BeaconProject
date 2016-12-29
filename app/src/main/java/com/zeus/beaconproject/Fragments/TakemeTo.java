@@ -36,9 +36,7 @@ public class TakemeTo extends Fragment implements View.OnClickListener {
 
     Map<Pair<String,String>,String> direction= new HashMap<>();
     Pair<String,String> p= new Pair<>("Electronics","Toys");
-    String received;
-    Region region;
-    BeaconManager beaconManager;
+
 
     @Nullable
     @Override
@@ -119,6 +117,7 @@ public class TakemeTo extends Fragment implements View.OnClickListener {
                         Bundle myBundle=new Bundle();
                         myBundle.putString("moveTo",moveTo);
                         Log.d("Directed","Directed ");
+                        frag.setArguments(myBundle);
                         ft.replace(R.id.content_frame,frag);
                         ft.commit();
 
