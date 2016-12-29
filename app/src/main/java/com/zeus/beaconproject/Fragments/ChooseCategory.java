@@ -13,11 +13,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.zeus.baazaar.Activities.MainActivity;
-import com.zeus.baazaar.Contract;
-import com.zeus.baazaar.Models.PaginatedItemResult;
-import com.zeus.baazaar.Networking.ApiClient;
-import com.zeus.baazaar.R;
+import com.zeus.beaconproject.MainActivity;
+import com.zeus.beaconproject.Contract;
+import com.zeus.beaconproject.Models.PaginatedItemResult;
+import com.zeus.beaconproject.Networking.ApiClient;
+import com.zeus.beaconproject.R;
 
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by Zeus on 28-Dec-16.
+ * Created by Zeus on 29-Dec-16.
  */
 
 public class ChooseCategory extends Fragment implements View.OnClickListener{
@@ -69,7 +69,7 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-
+                        //Toast.makeText(getContext(), "text= "+text.toString(), Toast.LENGTH_SHORT).show();
                         cat=text.toString();
 
                         final Call<PaginatedItemResult> getElec= ApiClient.getApiInterface().getItemsListByCategory
@@ -90,9 +90,8 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
                                     Fragment frag=new CatalogByCategory();
                                     Bundle b=new Bundle();
                                     MainActivity.catalogByCategoryBundle=b;
-                                    b.putSerializable("impData",hh);
-                                    frag.setArguments(b);
                                     MainActivity.stats=5;
+                                    b.putSerializable("impData",hh);
                                     ft.replace(R.id.content_frame,frag);
                                     ft.commit();
 
@@ -103,7 +102,7 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
 
                             @Override
                             public void onFailure(Call<PaginatedItemResult> call, Throwable t) {
-                                Log.i("fetch data","error occurred");
+                                Log.i("fetch data","failure occurred");
                             }
                         });
 

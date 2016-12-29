@@ -22,7 +22,7 @@
             android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.zeus.beaconproject.Models.WalmartItem" />
+            android:value="com.zeus.beaconproject.Models.ChosenProduct" />
 
 
 

@@ -11,16 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.zeus.baazaar.Activities.MainActivity;
-import com.zeus.baazaar.Models.PaginatedItemResult;
-import com.zeus.baazaar.Models.WalmartItem;
-import com.zeus.baazaar.ProductAdapter;
-import com.zeus.baazaar.R;
+import com.zeus.beaconproject.MainActivity;
+import com.zeus.beaconproject.Models.PaginatedItemResult;
+import com.zeus.beaconproject.Models.WalmartItem;
+import com.zeus.beaconproject.ProductAdapter;
+import com.zeus.beaconproject.R;
 
 import java.util.ArrayList;
 
 /**
- * Created by Zeus on 28-Dec-16.
+ * Created by Zeus on 29-Dec-16.
  */
 
 public class CatalogByCategory extends Fragment implements AdapterView.OnItemClickListener{
@@ -33,7 +33,7 @@ public class CatalogByCategory extends Fragment implements AdapterView.OnItemCli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.catalog_by_category_fragment, container, false);
-        recBundle=this.getArguments();
+        recBundle=MainActivity.catalogByCategoryBundle;
         if(recBundle!=null){
             paginatedItemResult= (PaginatedItemResult) recBundle.get("impData");
             curItemList=paginatedItemResult.items;
@@ -58,7 +58,6 @@ public class CatalogByCategory extends Fragment implements AdapterView.OnItemCli
         Bundle b=new Bundle();
         b.putSerializable("chosenProduct",curItemList.get(i));
         frag.setArguments(b);
-        MainActivity.oldBundle=recBundle;
         MainActivity.stats=7;
         ft.replace(R.id.content_frame,frag);
         ft.commit();

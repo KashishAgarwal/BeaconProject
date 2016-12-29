@@ -3,33 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/explore_catalog"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Explore Supermarket" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Review">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/shopping_list_review"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Your Shopping List" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/pending_items_select"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Pending Items" />
+            <item
+                android:id="@+id/cart_checkout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Checkout Cart" />
         </menu>
     </item>
 
