@@ -92,13 +92,48 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        region = new Region("ranged region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
+        region = new Region("ranged region", null, null, null);
 
 
         beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
             @Override
             public void onServiceReady() {
+                beaconManager.startMonitoring(region);
                 beaconManager.startRanging(region);
+            }
+        });
+
+        beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
+            @Override
+            public void onEnteredRegion(Region region, List<Beacon> list) {
+                PugNotification.with(getApplicationContext())
+                        .load()
+                        .title("HELLOO!!")
+                        .message("Welcome to the store.!!")
+                        .bigTextStyle("Hurry")
+                        .smallIcon(R.drawable.pugnotification_ic_launcher)
+                        .largeIcon(R.drawable.pugnotification_ic_launcher)
+                        .flags(Notification.DEFAULT_ALL)
+                        .color(android.R.color.background_dark)
+                        .simple()
+                        .build();
+            }
+
+            @Override
+            public void onExitedRegion(Region region) {
+
+                PugNotification.with(getApplicationContext())
+                        .load()
+                        .title("GoodBye!!")
+                        .message("Thanks For Visiting.!! \n See you soon :)")
+                        .bigTextStyle("Hurry")
+                        .smallIcon(R.drawable.pugnotification_ic_launcher)
+                        .largeIcon(R.drawable.pugnotification_ic_launcher)
+                        .flags(Notification.DEFAULT_ALL)
+                        .color(android.R.color.background_dark)
+                        .simple()
+                        .build();
+                // could add an "exit" notification too if you want (-:
             }
         });
 
