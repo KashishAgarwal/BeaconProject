@@ -29,6 +29,7 @@ import java.util.List;
 public class ProductDetailFragment extends Fragment implements View.OnClickListener{
     WalmartItem curItem;
     EditText editTextQuantity;
+    TextView textViewCurrentQuantity;
 
     @Nullable
     @Override
@@ -49,9 +50,17 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
             TextView productPriceTextView = (TextView) v.findViewById(R.id.TextViewProductPrice);
             productPriceTextView.setText("Rs" + curItem.salePrice);
 
-//            TextView textViewCurrentQuantity = (TextView) v.findViewById(R.id.textViewCurrentlyInCart);
-//            textViewCurrentQuantity.setText("Currently in Cart: "
-//                    + ShoppingCartHelper.getProductQuantity(selectedProduct));
+            int itemsBought=0;
+            List<ChosenProduct> prodDeleteList=new Select()
+                    .from(ChosenProduct.class)
+                    .where("itemId=?",curItem.itemId).execute();
+            if(prodDeleteList!=null && prodDeleteList.size()>0){
+                itemsBought=prodDeleteList.get(0).quantity;
+            }
+
+            textViewCurrentQuantity = (TextView) v.findViewById(R.id.textViewCurrentlyInCart);
+            textViewCurrentQuantity.setText("Currently in Cart: "
+                    + itemsBought);
 
             editTextQuantity = (EditText) v.findViewById(R.id.editTextQuantity);
 
@@ -94,6 +103,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
             cp.save();
             Toast.makeText(getContext(), "Saved successful: " , Toast.LENGTH_SHORT).show();
         }
+        textViewCurrentQuantity.setText("In cart:"+quantity);
         MainActivity.updateShoppingList();
     }
 }

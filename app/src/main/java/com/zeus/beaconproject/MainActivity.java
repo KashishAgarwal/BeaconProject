@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.activeandroid.query.Select;
 import com.zeus.beaconproject.Fragments.CatalogByCategory;
 import com.zeus.beaconproject.Fragments.ChooseCategory;
+import com.zeus.beaconproject.Fragments.ShoppingListFragment;
 import com.zeus.beaconproject.Fragments.TakemeTo;
 import com.zeus.beaconproject.Models.ChosenProduct;
 import com.estimote.sdk.Beacon;
@@ -233,6 +234,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.takemeTo:
                 fragment= new TakemeTo();
+                break;
+            case R.id.shopping_list_review:
+                fragment=new ShoppingListFragment();
                 break;
             default:
                 Toast.makeText(this, "Not implemented yet!", Toast.LENGTH_LONG).show();
