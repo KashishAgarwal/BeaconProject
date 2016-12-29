@@ -42,6 +42,15 @@ public class ChooseCategory extends Fragment implements View.OnClickListener{
         put("Movies & TV","4096");
     }};
 
+    public static final HashMap<String,String> categoryName=new HashMap<String,String>(){{
+        put("3944","Electronics");
+        put("4125","Toys");
+        put("3891","Jewelry");
+        put("1229749","Office");
+        put("4104","Music");
+        put("4096","Movies & TV");
+    }};
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
